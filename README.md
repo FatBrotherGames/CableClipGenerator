@@ -11,5 +11,4 @@ This tool allows to easily generate custom fitted 3d printable cable clip .stl f
 
 THIRD_PARTY_NOTICES:
 
-godot-stl-io by onze - MIT License
-[https://github.com/onze/godot-stl-io](https://github.com/onze/godot-stl-io)
+godot-stl-io by onze - MIT License   ---   https://github.com/onze/godot-stl-io -- godsend plugin, many thanks :)
