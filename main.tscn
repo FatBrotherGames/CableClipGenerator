@@ -1,0 +1,236 @@
+[gd_scene format=3 uid="uid://c0bgjpcab0k0e"]
+
+[ext_resource type="Script" uid="uid://csnvb7wdcuk7s" path="res://main.gd" id="1_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_top_color = Color(0.19278717, 0.23783416, 0.2978454, 1)
+sky_horizon_color = Color(0.48457053, 0.50759697, 0.53730565, 1)
+ground_bottom_color = Color(0.19215687, 0.23921569, 0.29803923, 1)
+ground_horizon_color = Color(0.48457053, 0.50759697, 0.53730565, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 1
+background_color = Color(0.036556315, 0.03655632, 0.03655632, 1)
+sky = SubResource("Sky_0xm2m")
+glow_enabled = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.8, 0.8, 0.8, 0.21176471)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4c57u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lquwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bvp3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xm2m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2yge"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kek77"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vw27"]
+
+[sub_resource type="Theme" id="Theme_bax8v"]
+default_font_size = 26
+
+[sub_resource type="Mesh" id="Mesh_facbu"]
+resource_local_to_scene = false
+resource_name = ""
+lightmap_size_hint = Vector2i(0, 0)
+
+[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("temp_parent", "util_mi", "item_list", "item_list_current_build", "check_box_automated_export_name", "spin_box")]
+script = ExtResource("1_0xm2m")
+temp_parent = NodePath("TempParent")
+util_mi = NodePath("MeshInstance3D")
+space_between = 0.8
+clips_to_merge = Array[int]([2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16])
+item_list = NodePath("GUI/ItemList_Select")
+item_list_current_build = NodePath("GUI/ItemList_Current_Build")
+check_box_automated_export_name = NodePath("GUI/Button_Save/CheckBox_Automated_Name")
+spin_box = NodePath("GUI/Label/SpinBox")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=380473102]
+environment = SubResource("Environment_h2yge")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2123431460]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_specular = 0.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.0
+
+[node name="TempParent" type="Node3D" parent="." unique_id=985520042]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 51.499996)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=384976277]
+transform = Transform3D(-4.364489e-08, -0.4514883, 0.89227706, 2.4101718e-09, 0.89227706, 0.4514883, -1, 2.1855696e-08, -3.785517e-08, 45, 47.943504, 0)
+projection = 1
+size = 100.0
+
+[node name="GUI" type="Control" parent="." unique_id=1980763710]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Button_Save" type="Button" parent="GUI" unique_id=163287341]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 49.0
+offset_right = 194.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 26
+text = "Save
+"
+
+[node name="CheckBox_Automated_Name" type="CheckBox" parent="GUI/Button_Save" unique_id=300309023]
+layout_mode = 0
+offset_left = 154.0
+offset_right = 349.0
+offset_bottom = 44.0
+button_pressed = true
+text = "Filename Autogen"
+
+[node name="Button_Add" type="Button" parent="GUI" unique_id=1636925586]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 107.0
+offset_right = 194.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 26
+text = "Add
+"
+
+[node name="Button_Delete" type="Button" parent="GUI" unique_id=657787015]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 166.0
+offset_right = 194.0
+offset_bottom = 210.0
+theme_override_font_sizes/font_size = 26
+text = "Delete"
+
+[node name="Label3" type="Label" parent="GUI" unique_id=716770770]
+layout_mode = 0
+offset_left = 892.0
+offset_top = 22.0
+offset_right = 1048.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 21
+text = "Available Parts:"
+
+[node name="Label4" type="Label" parent="GUI" unique_id=1436502276]
+layout_mode = 0
+offset_left = 608.0
+offset_top = 22.0
+offset_right = 764.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 21
+text = "Selected Parts:"
+
+[node name="ItemList_Select" type="ItemList" parent="GUI" unique_id=478742511]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 316.0
+offset_top = 60.0
+offset_right = 557.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0.8534875, 0.85348773, 0.85348743, 1)
+theme_override_colors/font_hovered_color = Color(0.95204574, 0.95951265, 0.86174184, 1)
+theme_override_colors/font_selected_color = Color(0.6909587, 1.2807269, 1.333, 1)
+theme_override_font_sizes/font_size = 20
+allow_search = false
+scroll_hint_mode = 1
+tile_scroll_hint = true
+item_count = 18
+item_0/text = "Spacer"
+item_1/text = "Spacer W/ Hole"
+item_2/text = "2,5mm"
+item_3/text = "3mm"
+item_4/text = "3,5mm"
+item_5/text = "4mm"
+item_6/text = "4,5mm"
+item_7/text = "5mm"
+item_8/text = "5,5mm"
+item_9/text = "6mm"
+item_10/text = "6,5mm"
+item_11/text = "6,5mm W/ Hole"
+item_12/text = "7mm"
+item_13/text = "7mm W/ Hole"
+item_14/text = "7,5mm"
+item_15/text = "7,5mm W/ Hole"
+item_16/text = "8mm"
+item_17/text = "8mm W/ Hole"
+
+[node name="ItemList_Current_Build" type="ItemList" parent="GUI" unique_id=1721204027]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 32.0
+offset_top = 60.0
+offset_right = 273.0
+offset_bottom = 375.0
+mouse_force_pass_scroll_events = false
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_colors/font_hovered_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/font_hovered_selected_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/font_selected_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/guide_color = Color(0.31764707, 0.31764707, 0.31764707, 0.70980394)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4c57u")
+theme_override_styles/hovered = SubResource("StyleBoxEmpty_7mycd")
+theme_override_styles/hovered_selected = SubResource("StyleBoxEmpty_lquwl")
+theme_override_styles/hovered_selected_focus = SubResource("StyleBoxEmpty_1bvp3")
+theme_override_styles/selected = SubResource("StyleBoxEmpty_0xm2m")
+theme_override_styles/selected_focus = SubResource("StyleBoxEmpty_h2yge")
+theme_override_styles/cursor_unfocused = SubResource("StyleBoxEmpty_kek77")
+theme_override_styles/cursor = SubResource("StyleBoxEmpty_5vw27")
+allow_search = false
+wraparound_items = false
+
+[node name="Label" type="Label" parent="GUI" unique_id=1706826365]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 225.0
+offset_right = 164.0
+offset_bottom = 256.0
+theme_override_font_sizes/font_size = 22
+text = "Margin:"
+
+[node name="SpinBox" type="SpinBox" parent="GUI/Label" unique_id=1131313285]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 140.0
+offset_bottom = 75.0
+theme = SubResource("Theme_bax8v")
+step = 0.1
+value = 0.8
+suffix = "mm"
+custom_arrow_step = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1044978229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.73633, -35.542915)
+mesh = SubResource("Mesh_facbu")
+
+[connection signal="pressed" from="GUI/Button_Save" to="." method="_on_button_save_pressed"]
+[connection signal="pressed" from="GUI/Button_Add" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="GUI/Button_Delete" to="." method="_on_delete_button_2_pressed"]
+[connection signal="item_activated" from="GUI/ItemList_Select" to="." method="_on_item_list_item_activated"]
+[connection signal="item_clicked" from="GUI/ItemList_Select" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_activated" from="GUI/ItemList_Current_Build" to="." method="_on_item_list_current_build_item_activated"]
+[connection signal="value_changed" from="GUI/Label/SpinBox" to="." method="_on_spin_box_value_changed"]
