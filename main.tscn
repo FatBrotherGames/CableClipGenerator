@@ -99,7 +99,6 @@ layout_mode = 0
 offset_left = 154.0
 offset_right = 349.0
 offset_bottom = 44.0
-button_pressed = true
 text = "Filename Autogen"
 
 [node name="Button_Add" type="Button" parent="GUI" unique_id=1636925586]

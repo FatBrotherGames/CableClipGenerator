@@ -305,6 +305,8 @@ func meshinstance_to_arraymesh(mi: MeshInstance3D) -> ArrayMesh:
 	return result
 
 func start_save_process()->void:
+	if stl_data.is_empty():
+		return
 	var instances : Array[MeshInstance3D] = []
 	for n in temp_parent.get_children():
 		instances.append(n as MeshInstance3D)
