@@ -28,15 +28,6 @@ Available Parts List: This displays the available parts to generate. Double clic
 
 ![Cable Clip Generator GUI Image](readme_images/cable_clip_generator_gui.png)
 
-TODO:
-1. Sensible variable naming - DONE
-2. Fix the flipped normals on the exported .stl files. PrusaSlicer does not mind much, but other slicers might. :( - FIXED :)
-3. Code Cleanup and documentation comments if needed - DONE ENOUGH :D
-4. Tutorial for use ( this be rather short ) - DONE
-5. Releases for Linux 64/32 Win 64/32
-
-
-
 
 
 THIRD_PARTY_NOTICES:
