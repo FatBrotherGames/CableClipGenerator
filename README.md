@@ -11,7 +11,7 @@ I HIGHLY recommend 3d Printing the clip_template.stl to check/measure which clip
 ![Clip Measure Template Image](readme_images/clip_template.png)
 
 ## Recommended 3d Print Orientation
-Printing the parts on the side is very important for neccessary part-strength! Otherwise the clips break easily.
+Printing the parts on the side is very important for neccessary part strength! Otherwise the clips break easily.
 
 ![3d Print Orientation Image](readme_images/print_orientation.png)
 
@@ -32,9 +32,11 @@ Selected Parts List: This displays the current build. Double clicking a part wil
 Available Parts List: This displays the available parts to generate. Double clicking a part will add it to the current build.
 
 ![Cable Clip Generator GUI Image](readme_images/cable_clip_generator_gui.png)
+## Planned Future Features:
+1. Add more selectable clip parts up to 20mm in 0.5mm steps with screwhole option.
+2. Add individual sized spacer.
+3. Allow adding clips inside the list and not just on the end. 
 
-
-
-THIRD_PARTY_NOTICES:
+# THIRD_PARTY_NOTICES:
 
 godot-stl-io by onze - MIT License   ---   https://github.com/onze/godot-stl-io -- godsend plugin, many thanks :)
