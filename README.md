@@ -8,10 +8,9 @@ Go to [releases](https://github.com/FatBrotherGames/CableClipGenerator/releases)
 Unpack the zip and start the executable. 
 
 3d Printing the clip_template.stl is HIGHLY recommended to check which clip sizes are needed when desinging the cable clips.
-[Clip Measure Template Image](readme_images/clip_template.png)
+![Clip Measure Template Image](readme_images/clip_template.png)
 
 ## How to use:
-INSERT IMAGE FROM PROGRAM
 
 Save Button: Starts save process if there is at least one cable clip part in the "Selected Parts List".
 
@@ -27,11 +26,13 @@ Selected Parts List: This displays the current build. Double clicking a part wil
 
 Available Parts List: This displays the available parts to generate. Double clicking a part will add it to the current build.
 
+![Cable Clip Generator GUI Image](readme_images/cable_clip_generator_gui.png)
+
 TODO:
 1. Sensible variable naming - DONE
 2. Fix the flipped normals on the exported .stl files. PrusaSlicer does not mind much, but other slicers might. :( - FIXED :)
 3. Code Cleanup and documentation comments if needed - DONE ENOUGH :D
-4. Tutorial for use ( this be rather short )
+4. Tutorial for use ( this be rather short ) - DONE
 5. Releases for Linux 64/32 Win 64/32
 
 
