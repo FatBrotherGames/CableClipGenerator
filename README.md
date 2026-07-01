@@ -1,7 +1,31 @@
-# CableClipGenerator
-This tool allows to easily generate custom fitted 3d printable cable clip .stl files to screw / tape on walls. 
+# Custom Cable Clip Generator
 
+This tool allows to easily generate custom fitted 3d printable cable clip .stl files to screw / tape on walls.
 Its developed in Godot 4.7. 
+
+## Installation:
+Go to [releases](https://github.com/FatBrotherGames/CableClipGenerator/releases) and download the latest 'cable_clip_gen-win64.zip' or 'cable_clip_gen-linux64.zip', depending on your os.
+Unpack the zip and start the executable. 
+
+3d Printing the clip_template.stl is HIGHLY recommended to check which clip sizes are needed when desinging the cable clips.
+INSERT IMAGE FROM TEMPLATE
+
+## How to use:
+INSERT IMAGE FROM PROGRAM
+
+Save Button: Starts save process if there is at least one cable clip part in the "Selected Parts List".
+
+Checkbox Filename Autogen: Checking this enables automatic name generation for the exported files based on the parts used.
+
+Add Button: The selected item in the "Available Parts" List will be added to the "Selected Parts List".
+
+Delete Button: Deletes last item in the "Selected Parts List".
+
+Margin: This number is used to set the space/margin between the parts.
+
+Selected Parts List: This displays the current build. Double clicking a part will delete it.
+
+Available Parts List: This displays the available parts to generate. Double clicking a part will add it to the current build.
 
 TODO:
 1. Sensible variable naming - DONE
