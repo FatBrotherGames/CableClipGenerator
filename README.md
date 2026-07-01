@@ -8,7 +8,7 @@ Go to [releases](https://github.com/FatBrotherGames/CableClipGenerator/releases)
 Unpack the zip and start the executable. 
 
 3d Printing the clip_template.stl is HIGHLY recommended to check which clip sizes are needed when desinging the cable clips.
-INSERT IMAGE FROM TEMPLATE
+[Clip Measure Template Image](readme_images/clip_template.png)
 
 ## How to use:
 INSERT IMAGE FROM PROGRAM
