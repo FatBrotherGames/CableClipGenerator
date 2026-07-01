@@ -17,6 +17,11 @@ background_color = Color(0.036556315, 0.03655632, 0.03655632, 1)
 sky = SubResource("Sky_0xm2m")
 glow_enabled = true
 
+[sub_resource type="Mesh" id="Mesh_facbu"]
+resource_local_to_scene = false
+resource_name = ""
+lightmap_size_hint = Vector2i(0, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
 bg_color = Color(0, 0, 0, 0)
 border_width_left = 1
@@ -42,20 +47,20 @@ border_color = Color(0.8, 0.8, 0.8, 0.21176471)
 [sub_resource type="Theme" id="Theme_bax8v"]
 default_font_size = 26
 
-[sub_resource type="Mesh" id="Mesh_facbu"]
-resource_local_to_scene = false
-resource_name = ""
-lightmap_size_hint = Vector2i(0, 0)
-
-[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list_selectable_parts", "item_list_current_build", "check_box_automated_export_name", "temp_parent", "spin_box", "util_mi")]
+[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list_selectable_parts", "item_list_current_build", "check_box_automated_export_name", "part_parent", "spin_box", "merge_mi")]
 script = ExtResource("1_0xm2m")
+space_between = 0.8
 item_list_selectable_parts = NodePath("GUI/ItemList_Select")
 item_list_current_build = NodePath("GUI/ItemList_Current_Build")
 check_box_automated_export_name = NodePath("GUI/Button_Save/CheckBox_Automated_Name")
-temp_parent = NodePath("TempParent")
-spin_box = NodePath("GUI/Label/SpinBox")
-util_mi = NodePath("MeshInstance3D")
-debug_clips_list = null
+part_parent = NodePath("PartParent")
+spin_box = NodePath("GUI/Label_Spinbox/SpinBox")
+merge_mi = NodePath("ExportMeshInstance")
+
+[node name="Camera3D Orthogonal" type="Camera3D" parent="." unique_id=384976277]
+transform = Transform3D(-4.371139e-08, -0.45399052, 0.8910065, 0, 0.8910065, 0.45399052, -1, 1.9844556e-08, -3.894713e-08, 45, 48, 0)
+projection = 1
+size = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=380473102]
 environment = SubResource("Environment_h2yge")
@@ -66,13 +71,12 @@ light_specular = 0.0
 directional_shadow_mode = 0
 directional_shadow_fade_start = 0.0
 
-[node name="TempParent" type="Node3D" parent="." unique_id=985520042]
+[node name="PartParent" type="Node3D" parent="." unique_id=985520042]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 51.499996)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=384976277]
-transform = Transform3D(-4.364489e-08, -0.4514883, 0.89227706, 2.4101718e-09, 0.89227706, 0.4514883, -1, 2.1855696e-08, -3.785517e-08, 45, 47.943504, 0)
-projection = 1
-size = 100.0
+[node name="ExportMeshInstance" type="MeshInstance3D" parent="." unique_id=1044978229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.73633, -35.542915)
+mesh = SubResource("Mesh_facbu")
 
 [node name="GUI" type="Control" parent="." unique_id=1980763710]
 layout_mode = 3
@@ -119,16 +123,7 @@ offset_bottom = 210.0
 theme_override_font_sizes/font_size = 26
 text = "Delete"
 
-[node name="Label3" type="Label" parent="GUI" unique_id=716770770]
-layout_mode = 0
-offset_left = 892.0
-offset_top = 22.0
-offset_right = 1048.0
-offset_bottom = 52.0
-theme_override_font_sizes/font_size = 21
-text = "Available Parts:"
-
-[node name="Label4" type="Label" parent="GUI" unique_id=1436502276]
+[node name="Label_Select" type="Label" parent="GUI" unique_id=1436502276]
 layout_mode = 0
 offset_left = 608.0
 offset_top = 22.0
@@ -173,6 +168,15 @@ item_15/text = "7,5mm W/ Hole"
 item_16/text = "8mm"
 item_17/text = "8mm W/ Hole"
 
+[node name="Label_Current_Build" type="Label" parent="GUI" unique_id=716770770]
+layout_mode = 0
+offset_left = 892.0
+offset_top = 22.0
+offset_right = 1048.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 21
+text = "Available Parts:"
+
 [node name="ItemList_Current_Build" type="ItemList" parent="GUI" unique_id=1721204027]
 layout_mode = 1
 anchors_preset = -1
@@ -201,7 +205,7 @@ theme_override_styles/cursor = SubResource("StyleBoxEmpty_5vw27")
 allow_search = false
 wraparound_items = false
 
-[node name="Label" type="Label" parent="GUI" unique_id=1706826365]
+[node name="Label_Spinbox" type="Label" parent="GUI" unique_id=1706826365]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 225.0
@@ -210,7 +214,7 @@ offset_bottom = 256.0
 theme_override_font_sizes/font_size = 22
 text = "Margin:"
 
-[node name="SpinBox" type="SpinBox" parent="GUI/Label" unique_id=1131313285]
+[node name="SpinBox" type="SpinBox" parent="GUI/Label_Spinbox" unique_id=1131313285]
 layout_mode = 0
 offset_top = 31.0
 offset_right = 140.0
@@ -221,14 +225,10 @@ value = 0.8
 suffix = "mm"
 custom_arrow_step = 0.1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1044978229]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.73633, -35.542915)
-mesh = SubResource("Mesh_facbu")
-
 [connection signal="pressed" from="GUI/Button_Save" to="." method="_on_button_save_pressed"]
 [connection signal="pressed" from="GUI/Button_Add" to="." method="_on_add_button_pressed"]
 [connection signal="pressed" from="GUI/Button_Delete" to="." method="_on_delete_button_pressed"]
 [connection signal="item_activated" from="GUI/ItemList_Select" to="." method="_on_item_list_item_activated"]
 [connection signal="item_clicked" from="GUI/ItemList_Select" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_activated" from="GUI/ItemList_Current_Build" to="." method="_on_item_list_current_build_item_activated"]
-[connection signal="value_changed" from="GUI/Label/SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="value_changed" from="GUI/Label_Spinbox/SpinBox" to="." method="_on_spin_box_value_changed"]

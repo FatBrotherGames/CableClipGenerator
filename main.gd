@@ -12,9 +12,9 @@ extends Node3D
 @export var item_list_selectable_parts: ItemList
 @export var item_list_current_build: ItemList
 @export var check_box_automated_export_name: CheckBox
-@export var temp_parent: Node3D
+@export var part_parent: Node3D
 @export var spin_box: SpinBox
-@export var util_mi : MeshInstance3D
+@export var merge_mi : MeshInstance3D
 
 # Array of all selected parts to generate
 var part_list : Array[ClipDataDict] = []
@@ -40,10 +40,10 @@ var baked_mesh: ArrayMesh
 	set(value):
 		if value:
 			load_debug_meshes = false
-			for n in temp_parent.get_children():
+			for n in part_parent.get_children():
 				n.queue_free()
 			part_list = []
-			util_mi.mesh = Mesh.new()
+			merge_mi.mesh = Mesh.new()
 			
 			for i in debug_clips_list.size():
 				var clip: ClipDataDict = ClipDataDict.new()
@@ -63,15 +63,15 @@ var baked_mesh: ArrayMesh
 		if value:
 			merge_multile_into_one = false
 			var instances : Array[MeshInstance3D] = []
-			for n in temp_parent.get_children():
+			for n in part_parent.get_children():
 				instances.append(n as MeshInstance3D)
-			util_mi.mesh = merge_meshinstances(instances).mesh
+			merge_mi.mesh = merge_meshinstances(instances).mesh
 
 @export var convert_merged_instance : bool = false : 
 	set(value):
 		if value:
 			convert_merged_instance = false
-			baked_mesh = meshinstance_to_arraymesh(util_mi)
+			baked_mesh = meshinstance_to_arraymesh(merge_mi)
 			
 @export var export_merged_instance : bool = false : 
 	set(value):
@@ -104,11 +104,11 @@ func populate_item_list() -> void:
 		item_list_selectable_parts.add_item(Gc.get_part_name(part))
 
 func add_clip_part(part_id: Gc.PARTS=Gc.PARTS.SPACER)-> void:
-	var clip: ClipDataDict = ClipDataDict.new()
-	clip.part_id = part_id
-	var new_mesh = get_preloaded_array_mesh(clip.part_id)
-	clip.arraymesh = new_mesh
-	part_list.append(clip)
+	var clip_data: ClipDataDict = ClipDataDict.new()
+	clip_data.part_id = part_id
+	var new_mesh : ArrayMesh = get_preloaded_array_mesh(clip_data.part_id)
+	clip_data.arraymesh = new_mesh
+	part_list.append(clip_data)
 	item_list_current_build.add_item(Gc.get_part_name(part_id))
 	generate_mi_mesh()
 
@@ -131,11 +131,15 @@ func get_preloaded_array_mesh(id: Gc.PARTS)->ArrayMesh:
 	return array_mesh
 
 func generate_mi_mesh() -> void: ## generates all the meshles at once :)
-	for n in temp_parent.get_children():
+	# Clear the generated meshes to then regenerate the new parts
+	for n in part_parent.get_children():
 		n.queue_free()
 
+	
 	var dis_y:float = 0.0
-	var surface_mat : StandardMaterial3D = StandardMaterial3D.new()
+	# Is needed so the box meshes are colored correctly
+	var surface_mat : StandardMaterial3D = StandardMaterial3D.new() 
+	
 	for index in part_list.size():
 		var new_mi = MeshInstance3D.new()
 		new_mi.mesh = part_list[index].arraymesh
@@ -144,7 +148,7 @@ func generate_mi_mesh() -> void: ## generates all the meshles at once :)
 		new_mi.position.y = dis_y
 		dis_y += aabb.size.y
 		if space_between != 0 and (index != part_list.size()-1):
-			var box = BoxMesh.new()
+			var box : BoxMesh = BoxMesh.new()
 			var width:float = 10.0
 			var height:float = space_between*1.02
 			var depth:float = 2.0
@@ -153,38 +157,38 @@ func generate_mi_mesh() -> void: ## generates all the meshles at once :)
 			
 			var st = SurfaceTool.new()
 			st.create_from(box, 0)
-			var array_mesh:ArrayMesh = st.commit()
+			var array_mesh : ArrayMesh = st.commit()
 			
 			# Bake the offset directly into the mesh vertices
-			var offset = Transform3D(Basis(), Vector3(width/2, dis_y + space_between/2, depth/2))
-			var baked = ArrayMesh.new()
-			var arrays = array_mesh.surface_get_arrays(0)
-			var verts: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var offset : Transform3D = Transform3D(Basis(), Vector3(width/2, dis_y + space_between/2, depth/2))
+			var baked : ArrayMesh = ArrayMesh.new()
+			var arrays : Array = array_mesh.surface_get_arrays(0)
+			var verts : PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 			for i in verts.size():
 				verts[i] = offset * verts[i]
 			arrays[Mesh.ARRAY_VERTEX] = verts
 			baked.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 			
-			var inbetween_mi = MeshInstance3D.new()
+			var inbetween_mi : MeshInstance3D = MeshInstance3D.new()
 			inbetween_mi.mesh = baked
 			inbetween_mi.set_surface_override_material(0, surface_mat)
 
-			temp_parent.add_child(inbetween_mi)
+			part_parent.add_child(inbetween_mi)
 			inbetween_mi.owner = get_tree().edited_scene_root
 			dis_y += space_between
 			
 
-		temp_parent.add_child(new_mi)
+		part_parent.add_child(new_mi)
 		new_mi.owner = get_tree().edited_scene_root
 	
-	temp_parent.position.z = dis_y/2
+	part_parent.position.z = dis_y/2
 
 func rotate_arraymesh(mesh: ArrayMesh, rotation: Vector3) -> ArrayMesh:
-	var basis = Basis.from_euler(rotation)
-	var result = ArrayMesh.new()
+	var basis : Basis = Basis.from_euler(rotation)
+	var result : ArrayMesh = ArrayMesh.new()
 
 	for surf_idx in mesh.get_surface_count():
-		var arrays = mesh.surface_get_arrays(surf_idx)
+		var arrays : Array = mesh.surface_get_arrays(surf_idx)
 
 		var verts: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 		for i in verts.size():
@@ -200,14 +204,14 @@ func rotate_arraymesh(mesh: ArrayMesh, rotation: Vector3) -> ArrayMesh:
 
 		result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 
-		var mat = mesh.surface_get_material(surf_idx)
+		var mat : Material = mesh.surface_get_material(surf_idx)
 		if mat:
 			result.surface_set_material(surf_idx, mat)
 
 	return result
 
 func merge_meshinstances(instances: Array[MeshInstance3D]) -> MeshInstance3D:
-	var merged = ArrayMesh.new()
+	var merged : ArrayMesh = ArrayMesh.new()
 
 	# Group surfaces by material so we minimize draw calls
 	var groups: Dictionary = {}  # Material -> { verts, normals, uvs, indices }
@@ -217,8 +221,8 @@ func merge_meshinstances(instances: Array[MeshInstance3D]) -> MeshInstance3D:
 		var t: Transform3D = mi.global_transform
 
 		for surf_idx in mesh.get_surface_count():
-			var mat = mesh.surface_get_material(surf_idx)
-			var arrays = mesh.surface_get_arrays(surf_idx)
+			var mat : Material= mesh.surface_get_material(surf_idx)
+			var arrays : Array = mesh.surface_get_arrays(surf_idx)
 
 			var src_verts: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 			var src_normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
@@ -315,10 +319,10 @@ func start_save_process()->void:
 	if part_list.is_empty():
 		return
 	var instances : Array[MeshInstance3D] = []
-	for n in temp_parent.get_children():
+	for n in part_parent.get_children():
 		instances.append(n as MeshInstance3D)
-	util_mi.mesh = merge_meshinstances(instances).mesh
-	export_mesh = meshinstance_to_arraymesh(util_mi)
+	merge_mi.mesh = merge_meshinstances(instances).mesh
+	export_mesh = meshinstance_to_arraymesh(merge_mi)
 	export_mesh = rotate_arraymesh(export_mesh, Vector3(deg_to_rad(export_rotation.x),deg_to_rad(export_rotation.y),deg_to_rad(export_rotation.z)))
 	
 	var export_name:String = ""
