@@ -3,50 +3,55 @@ extends Node3D
 
 #CLEAN UP THIS. THIS IS NOW FEATURE COMPLETE
  
-var baked_mesh: ArrayMesh
 var export_mesh: ArrayMesh
 
-@export var temp_parent: Node3D
 
-@export var util_mi : MeshInstance3D
 @export var export_rotation: Vector3 = Vector3(0,90,0)
 
 @export var space_between: float = 1.25
-@export var clips_to_merge: Array[Gc.PARTS] = []
 
+#UI
 @export var item_list: ItemList
 @export var item_list_current_build: ItemList
 @export var check_box_automated_export_name: CheckBox
-
+@export var temp_parent: Node3D
 @export var spin_box: SpinBox
+@export var util_mi : MeshInstance3D
 
-# stl_data array is used to merge all parts into one MeshInstance3D
-var stl_data : Array[ClipDataDict] = []
+# Array of all selected parts to generate
+var part_list : Array[ClipDataDict] = []
+# Contains all arraymeshes from the .stl files
 var preloaded_stl_data: Array[ClipDataDict]
+# For save path location. Once selected, the next time will use the path given
 var used_path : String = ""
+
+#region EditorDebugButtons
+var baked_mesh: ArrayMesh
+@export_group("Debug Functions")
+@export var debug_clips_list: Array[Gc.PARTS] = []
 
 @export var preload_debug_meshes : bool = false : 
 	set(value):
 		if value:
 			load_debug_meshes = false
 			preload_all_meshes()
-			
+
 @export var load_debug_meshes : bool = false : 
 	set(value):
 		if value:
 			load_debug_meshes = false
 			for n in temp_parent.get_children():
 				n.queue_free()
-			stl_data = []
+			part_list = []
 			util_mi.mesh = Mesh.new()
 			
-			for i in clips_to_merge.size():
+			for i in debug_clips_list.size():
 				var clip: ClipDataDict = ClipDataDict.new()
-				clip.part_id = clips_to_merge[i]
+				clip.part_id = debug_clips_list[i]
 				var new_mesh = get_preloaded_array_mesh(clip.part_id)
 				clip.arraymesh = new_mesh#rotate_arraymesh(new_mesh, Vector3(deg_to_rad(0), deg_to_rad(0), deg_to_rad(0)))
-				stl_data.append(clip)
-			
+				part_list.append(clip)
+
 @export var generate_debug_meshes : bool = false : 
 	set(value):
 		if value:
@@ -75,6 +80,8 @@ var used_path : String = ""
 			# Rotates the final stl to the preferred print rotation. 
 			baked_mesh = rotate_arraymesh(baked_mesh, Vector3(deg_to_rad(export_rotation.x),deg_to_rad(export_rotation.y),deg_to_rad(export_rotation.z)))
 			STLIO.Exporter.SaveToPath(baked_mesh, 'res://default_clips/baked29.stl')
+@export_group("")
+#endregion
 
 func _ready() -> void:
 	preload_all_meshes()
@@ -101,16 +108,16 @@ func add_clip_part(part_id: Gc.PARTS=Gc.PARTS.SPACER)-> void:
 	clip.part_id = part_id
 	var new_mesh = get_preloaded_array_mesh(clip.part_id)
 	clip.arraymesh = new_mesh
-	stl_data.append(clip)
+	part_list.append(clip)
 	item_list_current_build.add_item(Gc.get_part_name(part_id))
 	generate_mi_mesh()
 
 func remove_last_clip_part(index:int=-1)->void:
 	if index == -1:
-		index = stl_data.size()-1
-		stl_data.pop_back()
+		index = part_list.size()-1
+		part_list.pop_back()
 	else:
-		stl_data.pop_at(index)
+		part_list.pop_at(index)
 	
 	generate_mi_mesh()
 	item_list_current_build.remove_item(index)
@@ -129,14 +136,14 @@ func generate_mi_mesh() -> void: ## generates all the meshles at once :)
 
 	var dis_y:float = 0.0
 	var surface_mat : StandardMaterial3D = StandardMaterial3D.new()
-	for index in stl_data.size():
+	for index in part_list.size():
 		var new_mi = MeshInstance3D.new()
-		new_mi.mesh = stl_data[index].arraymesh
+		new_mi.mesh = part_list[index].arraymesh
 		var aabb : AABB = new_mi.get_aabb()
 		
 		new_mi.position.y = dis_y
 		dis_y += aabb.size.y
-		if space_between != 0 and (index != stl_data.size()-1):
+		if space_between != 0 and (index != part_list.size()-1):
 			var box = BoxMesh.new()
 			var width:float = 10.0
 			var height:float = space_between*1.02
@@ -305,7 +312,7 @@ func meshinstance_to_arraymesh(mi: MeshInstance3D) -> ArrayMesh:
 	return result
 
 func start_save_process()->void:
-	if stl_data.is_empty():
+	if part_list.is_empty():
 		return
 	var instances : Array[MeshInstance3D] = []
 	for n in temp_parent.get_children():
@@ -322,8 +329,8 @@ func start_save_process()->void:
 
 func generate_export_name()->String:
 	var name = ""
-	for index in stl_data.size():
-		var clip:ClipDataDict = stl_data[index]
+	for index in part_list.size():
+		var clip:ClipDataDict = part_list[index]
 		if index != 0:
 			name += "_"
 		name += Gc.get_part_shortcut(clip.part_id)

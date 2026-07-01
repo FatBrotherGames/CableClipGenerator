@@ -47,16 +47,16 @@ resource_local_to_scene = false
 resource_name = ""
 lightmap_size_hint = Vector2i(0, 0)
 
-[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("temp_parent", "util_mi", "item_list", "item_list_current_build", "check_box_automated_export_name", "spin_box")]
+[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list", "item_list_current_build", "check_box_automated_export_name", "temp_parent", "spin_box", "util_mi")]
 script = ExtResource("1_0xm2m")
-temp_parent = NodePath("TempParent")
-util_mi = NodePath("MeshInstance3D")
 space_between = 0.8
-clips_to_merge = Array[int]([2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16])
 item_list = NodePath("GUI/ItemList_Select")
 item_list_current_build = NodePath("GUI/ItemList_Current_Build")
 check_box_automated_export_name = NodePath("GUI/Button_Save/CheckBox_Automated_Name")
+temp_parent = NodePath("TempParent")
 spin_box = NodePath("GUI/Label/SpinBox")
+util_mi = NodePath("MeshInstance3D")
+debug_clips_list = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=380473102]
 environment = SubResource("Environment_h2yge")
