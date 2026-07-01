@@ -10,6 +10,11 @@ Unpack the zip and start the executable.
 I HIGHLY recommend 3d Printing the clip_template.stl to check/measure which clip sizes are needed when desinging the cable clips.
 ![Clip Measure Template Image](readme_images/clip_template.png)
 
+## Recommended 3d Print Orientation
+Printing the parts on the side is very important for neccessary part-strength! Otherwise the clips break easily.
+
+![3d Print Orientation Image](readme_images/print_orientation.png)
+
 ## How to use:
 
 Save Button: Starts save process if there is at least one cable clip part in the "Selected Parts List".

@@ -332,7 +332,7 @@ func start_save_process()->void:
 	open_save_dialog(export_name)
 
 func generate_export_name()->String:
-	var export_name = ""
+	var export_name = "cable_clip_"
 	for index in part_list.size():
 		var clip:ClipDataDict = part_list[index]
 		if index != 0:
