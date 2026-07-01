@@ -292,7 +292,7 @@ func meshinstance_to_arraymesh(mi: MeshInstance3D) -> ArrayMesh:
 		var new_normals = PackedVector3Array()
 
 		for v in src_verts:
-			new_verts.append(t * v)
+			new_verts.append(t * v * -1)
 
 		if src_normals.size() > 0:
 			for n in src_normals:

@@ -47,9 +47,9 @@ resource_local_to_scene = false
 resource_name = ""
 lightmap_size_hint = Vector2i(0, 0)
 
-[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list", "item_list_current_build", "check_box_automated_export_name", "temp_parent", "spin_box", "util_mi")]
+[node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list_selectable_parts", "item_list_current_build", "check_box_automated_export_name", "temp_parent", "spin_box", "util_mi")]
 script = ExtResource("1_0xm2m")
-item_list = NodePath("GUI/ItemList_Select")
+item_list_selectable_parts = NodePath("GUI/ItemList_Select")
 item_list_current_build = NodePath("GUI/ItemList_Current_Build")
 check_box_automated_export_name = NodePath("GUI/Button_Save/CheckBox_Automated_Name")
 temp_parent = NodePath("TempParent")
