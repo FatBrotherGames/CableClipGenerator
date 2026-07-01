@@ -4,9 +4,9 @@ This tool allows to easily generate custom fitted 3d printable cable clip .stl f
 Its developed in Godot 4.7. 
 
 TODO:
-1. Sensible variable naming
-2. Fix the flipped normals on the exported .stl files. PrusaSlicer does not mind much, but other slicers might. :(
-3. Code Cleanup and documentation comments if needed
+1. Sensible variable naming - DONE
+2. Fix the flipped normals on the exported .stl files. PrusaSlicer does not mind much, but other slicers might. :( - FIXED :)
+3. Code Cleanup and documentation comments if needed - DONE ENOUGH :D
 4. Tutorial for use ( this be rather short )
 5. Releases for Linux 64/32 Win 64/32
 
