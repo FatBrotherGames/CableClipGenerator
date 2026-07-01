@@ -4,7 +4,7 @@ This tool allows to easily generate custom fitted 3d printable cable clip .stl f
 Its developed in Godot 4.7. 
 
 ## Installation:
-Go to [releases](https://github.com/FatBrotherGames/CableClipGenerator/releases) and download the latest 'cable_clip_gen-win64.zip' or 'cable_clip_gen-linux64.zip', depending on your os.
+Go to [releases](https://github.com/FatBrotherGames/CableClipGenerator/releases) and download the latest `cable_clip_gen-win64.zip` or `cable_clip_gen-linux64.zip`, depending on your os.
 Unpack the zip and start the executable. 
 
 3d Printing the clip_template.stl is HIGHLY recommended to check which clip sizes are needed when desinging the cable clips.
