@@ -2,16 +2,14 @@
 extends Node3D
 
 #CLEAN UP THIS. THIS IS NOW FEATURE COMPLETE
- 
-var export_mesh: ArrayMesh
 
-
+# Rotation for exported stl files. Used to correctly rotate the parts for the 3d printer  
 @export var export_rotation: Vector3 = Vector3(0,90,0)
-
-@export var space_between: float = 1.25
+# Space between parts. millimeter
+@export_range(0.0, 100.0, 0.05) var space_between: float = 1.25
 
 #UI
-@export var item_list: ItemList
+@export var item_list_selectable_parts: ItemList
 @export var item_list_current_build: ItemList
 @export var check_box_automated_export_name: CheckBox
 @export var temp_parent: Node3D
@@ -24,6 +22,8 @@ var part_list : Array[ClipDataDict] = []
 var preloaded_stl_data: Array[ClipDataDict]
 # For save path location. Once selected, the next time will use the path given
 var used_path : String = ""
+# The arraymesh of the merged part to get converted to a .stl file for export
+var export_mesh: ArrayMesh
 
 #region EditorDebugButtons
 var baked_mesh: ArrayMesh
@@ -99,9 +99,9 @@ func preload_all_meshes() -> void:
 		print("Preloaded: " + path)
 
 func populate_item_list() -> void: 
-	item_list.clear()
+	item_list_selectable_parts.clear()
 	for part in Gc.get_parts_list():
-		item_list.add_item(Gc.get_part_name(part))
+		item_list_selectable_parts.add_item(Gc.get_part_name(part))
 
 func add_clip_part(part_id: Gc.PARTS=Gc.PARTS.SPACER)-> void:
 	var clip: ClipDataDict = ClipDataDict.new()
@@ -112,7 +112,7 @@ func add_clip_part(part_id: Gc.PARTS=Gc.PARTS.SPACER)-> void:
 	item_list_current_build.add_item(Gc.get_part_name(part_id))
 	generate_mi_mesh()
 
-func remove_last_clip_part(index:int=-1)->void:
+func remove_clip_part(index:int=-1)->void:
 	if index == -1:
 		index = part_list.size()-1
 		part_list.pop_back()
@@ -365,18 +365,18 @@ func _on_item_list_item_activated(index: int) -> void:
 	add_clip_part(index)
 
 func _on_item_list_current_build_item_activated(index: int) -> void:
-	remove_last_clip_part(index)
+	remove_clip_part(index)
 
-func _on_delete_button_2_pressed() -> void:
-	remove_last_clip_part()
+func _on_delete_button_pressed() -> void:
+	remove_clip_part()
 
 func _on_spin_box_value_changed(value: float) -> void:
 	space_between = value
 	generate_mi_mesh()
 
 func _on_add_button_pressed() -> void:
-	if item_list.is_anything_selected():
-		add_clip_part(item_list.get_selected_items()[0])
+	if item_list_selectable_parts.is_anything_selected():
+		add_clip_part(item_list_selectable_parts.get_selected_items()[0])
 
 func _on_button_save_pressed() -> void:
 	start_save_process()

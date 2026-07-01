@@ -49,7 +49,6 @@ lightmap_size_hint = Vector2i(0, 0)
 
 [node name="Main" type="Node3D" unique_id=1781077220 node_paths=PackedStringArray("item_list", "item_list_current_build", "check_box_automated_export_name", "temp_parent", "spin_box", "util_mi")]
 script = ExtResource("1_0xm2m")
-space_between = 0.8
 item_list = NodePath("GUI/ItemList_Select")
 item_list_current_build = NodePath("GUI/ItemList_Current_Build")
 check_box_automated_export_name = NodePath("GUI/Button_Save/CheckBox_Automated_Name")
@@ -228,7 +227,7 @@ mesh = SubResource("Mesh_facbu")
 
 [connection signal="pressed" from="GUI/Button_Save" to="." method="_on_button_save_pressed"]
 [connection signal="pressed" from="GUI/Button_Add" to="." method="_on_add_button_pressed"]
-[connection signal="pressed" from="GUI/Button_Delete" to="." method="_on_delete_button_2_pressed"]
+[connection signal="pressed" from="GUI/Button_Delete" to="." method="_on_delete_button_pressed"]
 [connection signal="item_activated" from="GUI/ItemList_Select" to="." method="_on_item_list_item_activated"]
 [connection signal="item_clicked" from="GUI/ItemList_Select" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_activated" from="GUI/ItemList_Current_Build" to="." method="_on_item_list_current_build_item_activated"]
