@@ -183,8 +183,8 @@ func generate_mi_mesh() -> void: ## generates all the meshles at once :)
 	
 	part_parent.position.z = dis_y/2
 
-func rotate_arraymesh(mesh: ArrayMesh, rotation: Vector3) -> ArrayMesh:
-	var basis : Basis = Basis.from_euler(rotation)
+func rotate_arraymesh(mesh: ArrayMesh, _rotation: Vector3) -> ArrayMesh:
+	var _basis : Basis = Basis.from_euler(_rotation)
 	var result : ArrayMesh = ArrayMesh.new()
 
 	for surf_idx in mesh.get_surface_count():
@@ -192,12 +192,12 @@ func rotate_arraymesh(mesh: ArrayMesh, rotation: Vector3) -> ArrayMesh:
 
 		var verts: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 		for i in verts.size():
-			verts[i] = basis * verts[i]
+			verts[i] = _basis * verts[i]
 
 		var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
 		if normals.size() > 0:
 			for i in normals.size():
-				normals[i] = (basis * normals[i]).normalized()
+				normals[i] = (_basis * normals[i]).normalized()
 
 		arrays[Mesh.ARRAY_VERTEX] = verts
 		arrays[Mesh.ARRAY_NORMAL] = normals
@@ -332,14 +332,14 @@ func start_save_process()->void:
 	open_save_dialog(export_name)
 
 func generate_export_name()->String:
-	var name = ""
+	var export_name = ""
 	for index in part_list.size():
 		var clip:ClipDataDict = part_list[index]
 		if index != 0:
-			name += "_"
-		name += Gc.get_part_shortcut(clip.part_id)
+			export_name += "_"
+		export_name += Gc.get_part_shortcut(clip.part_id)
 	
-	return name
+	return export_name
 
 func open_save_dialog(automated_name:String=""):
 	var dialog = FileDialog.new()
